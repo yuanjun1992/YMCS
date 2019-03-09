@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+ 
+    <!-- 告知Spring，我们启用注解驱动 -->
+    <mvc:annotation-driven/>
+    <!-- org.springframework.web.servlet.resource.DefaultServletHttpRequestHandler，
+    它会像一个检查员，对进入DispatcherServlet的URL进行筛查，如果发现是静态资源的请求，
+    就将该请求转由Web应用服务器默认的Servlet处理，如果不是静态资源的请求，才由DispatcherServlet继续处理。 -->
+    <mvc:default-servlet-handler/>
+    <!-- 指定要扫描的包的位置 -->
+    <context:component-scan base-package="main.java.com.yep" />
+    <!-- 对静态资源文件的访问,因为Spring MVC会拦截所有请求,导致jsp页面中对js和CSS的引用也被拦截,配置后可以把对资源的请求交给项目的
+    默认拦截器而不是Spring MVC-->
+    <mvc:resources mapping="/static/**" location="/WEB-INF/static/" />
+    <!-- 配置Spring MVC的视图解析器 -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <!-- 有时我们需要访问JSP页面,可理解为在控制器controller的返回值加前缀和后缀,变成一个可用的URL地址 -->
+        <property name="prefix" value="/WEB-INF/jsp/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+    <!-- 支持文件上传 -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+    	 <!-- 请求编码格式 -->
+    	 <property name="defaultEncoding" value="utf-8"></property>
+    	 <!-- 上传文件大小(单位:字节) -->
+         <property name="maxUploadSize" value="50000000"></property>
+         <!-- 缓冲区大小(单位:KB) -->
+         <property name="maxInMemorySize" value="1024"></property>
+    </bean>
+    
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
+          depends-on="lifecycleBeanPostProcessor"/>
+    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+        <property name="securityManager" ref="securityManager"/>
+    </bean>
+</beans>

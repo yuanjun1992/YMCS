@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="main.java.com.yep.dao.ArticleInfoMapper" >
+  <resultMap id="BaseResultMap" type="Article" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="articleCategoryId" property="articlecategoryid" jdbcType="INTEGER" />
+    <result column="articleTitle" property="articletitle" jdbcType="VARCHAR" />
+    <result column="articleDescription" property="articledescription" jdbcType="VARCHAR" />
+    <result column="articleDateTime" property="articledatetime" jdbcType="DATE" />
+    <result column="articleAuthor" property="articleauthor" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, articleCategoryId, articleTitle, articleDescription, articleDateTime, articleAuthor
+  </sql>
+  <sql id="Blob_Column_List" >
+    articleContent
+  </sql>
+  <select id="getAllArticleInfo" resultMap="BaseResultMap">
+  	select * from article_info
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from article_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from article_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="Article" >
+    insert into article_info (id, articleCategoryId, articleTitle, 
+      articleDescription, articleDateTime, articleAuthor, 
+      articleContent,articleKeyWord,articleImageUrl)
+    values (#{id,jdbcType=INTEGER}, #{articlecategoryid,jdbcType=INTEGER}, #{articletitle,jdbcType=VARCHAR}, 
+      #{articledescription,jdbcType=VARCHAR}, #{articledatetime,jdbcType=DATE}, #{articleauthor,jdbcType=VARCHAR}, 
+      #{articlecontent,jdbcType=LONGVARCHAR},#{articlekeyword,jdbcType=VARCHAR},#{articleimageurl,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="Article" >
+    insert into article_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="articlecategoryid != null" >
+        articleCategoryId,
+      </if>
+      <if test="articletitle != null" >
+        articleTitle,
+      </if>
+      <if test="articledescription != null" >
+        articleDescription,
+      </if>
+      <if test="articledatetime != null" >
+        articleDateTime,
+      </if>
+      <if test="articleauthor != null" >
+        articleAuthor,
+      </if>
+      <if test="articlecontent != null" >
+        articleContent,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="articlecategoryid != null" >
+        #{articlecategoryid,jdbcType=INTEGER},
+      </if>
+      <if test="articletitle != null" >
+        #{articletitle,jdbcType=VARCHAR},
+      </if>
+      <if test="articledescription != null" >
+        #{articledescription,jdbcType=VARCHAR},
+      </if>
+      <if test="articledatetime != null" >
+        #{articledatetime,jdbcType=DATE},
+      </if>
+      <if test="articleauthor != null" >
+        #{articleauthor,jdbcType=VARCHAR},
+      </if>
+      <if test="articlecontent != null" >
+        #{articlecontent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="Article" >
+    update article_info
+    <set >
+      <if test="articlecategoryid != null" >
+        articleCategoryId = #{articlecategoryid,jdbcType=INTEGER},
+      </if>
+      <if test="articletitle != null" >
+        articleTitle = #{articletitle,jdbcType=VARCHAR},
+      </if>
+      <if test="articledescription != null" >
+        articleDescription = #{articledescription,jdbcType=VARCHAR},
+      </if>
+      <if test="articledatetime != null" >
+        articleDateTime = #{articledatetime,jdbcType=DATE},
+      </if>
+      <if test="articleauthor != null" >
+        articleAuthor = #{articleauthor,jdbcType=VARCHAR},
+      </if>
+      <if test="articlecontent != null" >
+        articleContent = #{articlecontent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="Article" >
+    update article_info
+    set articleCategoryId = #{articlecategoryid,jdbcType=INTEGER},
+      articleTitle = #{articletitle,jdbcType=VARCHAR},
+      articleDescription = #{articledescription,jdbcType=VARCHAR},
+      articleDateTime = #{articledatetime,jdbcType=DATE},
+      articleAuthor = #{articleauthor,jdbcType=VARCHAR},
+      articleContent = #{articlecontent,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="Article" >
+    update article_info
+    set articleCategoryId = #{articlecategoryid,jdbcType=INTEGER},
+      articleTitle = #{articletitle,jdbcType=VARCHAR},
+      articleDescription = #{articledescription,jdbcType=VARCHAR},
+      articleDateTime = #{articledatetime,jdbcType=DATE},
+      articleAuthor = #{articleauthor,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

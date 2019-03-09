@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="main.java.com.yep.dao.MenuInfoMapper" >
+  <resultMap id="BaseResultMap" type="Menu" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="menu_name" property="menuName" jdbcType="VARCHAR" />
+    <result column="menu_parentid" property="menuParentid" jdbcType="INTEGER" />
+    <result column="menu_level" property="menuLevel" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, menu_name, menu_parentid, menu_level
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from menu_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAllMenuInfo" resultType="java.util.HashMap">
+  select id "id",menu_name "text", menu_parentid "parentid", menu_level "level" from menu_info
+  </select>
+  <select id="getMenuInfo" resultMap="BaseResultMap">
+  select * from menu_info
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from menu_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="Menu" >
+    insert into menu_info (id, menu_name, menu_parentid, 
+      menu_level)
+    values (#{id,jdbcType=INTEGER}, #{menuName,jdbcType=VARCHAR}, #{menuParentid,jdbcType=INTEGER}, 
+      #{menuLevel,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="Menu" >
+    insert into menu_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="menuName != null" >
+        menu_name,
+      </if>
+      <if test="menuParentid != null" >
+        menu_parentid,
+      </if>
+      <if test="menuLevel != null" >
+        menu_level,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="menuName != null" >
+        #{menuName,jdbcType=VARCHAR},
+      </if>
+      <if test="menuParentid != null" >
+        #{menuParentid,jdbcType=INTEGER},
+      </if>
+      <if test="menuLevel != null" >
+        #{menuLevel,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="Menu" >
+    update menu_info
+    <set >
+      <if test="menuName != null" >
+        menu_name = #{menuName,jdbcType=VARCHAR},
+      </if>
+      <if test="menuParentid != null" >
+        menu_parentid = #{menuParentid,jdbcType=INTEGER},
+      </if>
+      <if test="menuLevel != null" >
+        menu_level = #{menuLevel,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="Menu" >
+    update menu_info
+    set menu_name = #{menuName,jdbcType=VARCHAR},
+      menu_parentid = #{menuParentid,jdbcType=INTEGER},
+      menu_level = #{menuLevel,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

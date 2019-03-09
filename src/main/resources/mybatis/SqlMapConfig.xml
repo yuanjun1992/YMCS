@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD SQL Map Config 3.0//EN"
+                "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<!-- 将实体类匹配成XXXMapper.xml中可以直接使用的类型 -->
+		<!-- 测试使用的类 -->
+		<typeAlias type="main.java.com.yep.pojo.User" alias="User"/>
+		<typeAlias type="main.java.com.yep.pojo.ArticleBean$RowsBean" alias="Article"/>
+		<typeAlias type="main.java.com.yep.pojo.MenuInfo" alias="Menu"/>
+	</typeAliases>
+</configuration>    
