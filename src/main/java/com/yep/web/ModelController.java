@@ -34,9 +34,14 @@ public class ModelController extends BaseController {
         modelEntity.setId(1);
         modelEntity.setModel_name("123.html");
         entities.add(modelEntity);
-        this.outJson1(response, entities);
+        this.outJson1(response, entities);       
     }
       
+    private void whlie() {
+        // TODO Auto-generated method stub
+        
+    }
+
     @RequestMapping(value="/index")
     public String showModelFilePage(HttpServletRequest request, HttpServletResponse response) throws IOException{
         String name = request.getParameter("name");
